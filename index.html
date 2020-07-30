@@ -1,21 +1,61 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>WEB</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="colors.js" charset="utf-8"></script>
-  </head>
-  <body>
-    <h1><a href="index.html">WEB</a></h1>
-    <input type="button" value="night" onclick="
-    daynighthandler(this);
-    ">
-    <div id="grid">
-      <ol>
-        <li><a href="1.html">HTML</a></li>
-        <li><a href="2.html">CSS</a></li>
-        <li><a href="3.html">JavaScript</a></li>
-      </ol>
-  </body>
+
+<head>
+  <meta charset="utf-8">
+  <title>WEB</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="colors.js" charset="utf-8"></script>
+  <script src="fetch-master/fetch-master/fetch.js" charset="utf-8"></script>
+</head>
+
+<body>
+  <h1><a href="">WEB</a></h1>
+  <input type="button" value="night" onclick="
+  daynighthandler(this)";
+  >
+  <div id="grid">
+    <ol id = 'nav'>
+
+    </ol>
+    <script>
+    fetch('list').then(function(response){
+      response.text().then(function(text){
+        var items = text.split(',');
+          var i = 0;
+          var tags = '';
+          while(i<items.length){
+            var item = items[i];
+            item = item.trim();
+            var tag = '<li><a href="#!'+item+'" onclick="fetchPage(\''+item+'\')">'+item+'</a></li>';
+            tags = tags + tag;
+            i = i + 1;
+          }
+        document.querySelector('#nav').innerHTML= tags;
+      })
+    });
+    </script>
+    <article>
+
+    </article>
+    <script>
+    function fetchPage(name){ fetch(name).then(function(response){
+      response.text().then(function(text){
+        document.querySelector('article').innerHTML= text;
+      })
+    });
+    }
+    if(location.hash){
+      fetchPage(location.hash.substr(2));
+    }else{
+      fetchPage('welcome');
+    }
+
+    </script>
+  </div>
+</body>
+
 </html>
+
+<p><u></u></p>
